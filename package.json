@@ -1,0 +1,12 @@
+{
+  "name": "playwright-learning-udemy",
+  "version": "1.0.0",
+  "description": "Playwright learning project from Udemy course",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^20.19.27"
+  }
+}
