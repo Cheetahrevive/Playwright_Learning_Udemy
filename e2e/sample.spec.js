@@ -1,10 +1,17 @@
 const { test, expect } = require('@playwright/test');
 
-test.describe('Sample Playwright Test', () => {
-  test('should navigate to Playwright website and verify title', async ({ page }) => {
-    // Navigate to the Playwright website
-    await page.goto('https://playwright.dev/');
+/**
+ * Sample Playwright Test
+ * Demonstrates basic Playwright testing patterns and best practices
+ */
 
+test.describe('Sample Playwright Test', () => {
+  // Setup: Navigate to the Playwright website before each test
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://playwright.dev/');
+  });
+
+  test('should navigate to Playwright website and verify title', async ({ page }) => {
     // Verify the page title contains "Playwright"
     await expect(page).toHaveTitle(/Playwright/);
 
@@ -13,9 +20,6 @@ test.describe('Sample Playwright Test', () => {
   });
 
   test('should find and interact with the Get Started link', async ({ page }) => {
-    // Navigate to the Playwright website
-    await page.goto('https://playwright.dev/');
-
     // Find the "Get started" link and click it
     await page.getByRole('link', { name: 'Get started' }).click();
 
@@ -24,9 +28,6 @@ test.describe('Sample Playwright Test', () => {
   });
 
   test('should verify page has expected content', async ({ page }) => {
-    // Navigate to the Playwright website
-    await page.goto('https://playwright.dev/');
-
     // Verify key elements are present
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toBeVisible();
