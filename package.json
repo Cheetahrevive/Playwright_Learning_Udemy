@@ -12,7 +12,9 @@
     "test:mobile": "npx playwright test --project='Mobile Chrome' --project='Mobile Safari'",
     "test:ui": "npx playwright test --ui",
     "report": "npx playwright show-report",
-    "codegen": "npx playwright codegen"
+    "codegen": "npx playwright codegen",
+    "install:browsers": "npx playwright install chromium",
+    "verify": "npx playwright test --project=chromium"
   },
   "keywords": ["playwright", "testing", "automation", "e2e"],
   "author": "",

@@ -4,7 +4,6 @@ const { test, expect } = require('@playwright/test');
  * Sample Playwright Test
  * Demonstrates basic Playwright testing patterns and best practices
  */
-
 test.describe('Sample Playwright Test', () => {
   // Setup: Navigate to the Playwright website before each test
   test.beforeEach(async ({ page }) => {
@@ -14,9 +13,6 @@ test.describe('Sample Playwright Test', () => {
   test('should navigate to Playwright website and verify title', async ({ page }) => {
     // Verify the page title contains "Playwright"
     await expect(page).toHaveTitle(/Playwright/);
-
-    // Take a screenshot for verification
-    await page.screenshot({ path: 'screenshot.png' });
   });
 
   test('should find and interact with the Get Started link', async ({ page }) => {
@@ -33,7 +29,7 @@ test.describe('Sample Playwright Test', () => {
     await expect(heading).toBeVisible();
 
     // Verify the page has expected text
-    const text = await page.getByText('Playwright enables reliable end-to-end testing');
+    const text = page.getByText('Playwright enables reliable end-to-end testing');
     await expect(text).toBeVisible();
   });
 });
