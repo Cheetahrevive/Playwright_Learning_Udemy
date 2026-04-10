@@ -24,12 +24,9 @@ test.describe('Sample Playwright Test', () => {
   });
 
   test('should verify page has expected content', async ({ page }) => {
-    // Verify key elements are present
+    // Verify the H1 is visible and contains the expected partial text
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toBeVisible();
-
-    // Verify the page has expected text
-    const text = page.getByText('Playwright enables reliable end-to-end testing');
-    await expect(text).toBeVisible();
+    await expect(heading).toContainText('Playwright enables reliable');
   });
 });

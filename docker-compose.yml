@@ -1,0 +1,40 @@
+services:
+
+  # Run all tests across all browsers
+  playwright:
+    build: .
+    environment:
+      - CI=true
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+
+  # Run Chromium tests only
+  playwright-chromium:
+    build: .
+    environment:
+      - CI=true
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    command: npx playwright test --project=chromium
+
+  # Run Firefox tests only
+  playwright-firefox:
+    build: .
+    environment:
+      - CI=true
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    command: npx playwright test --project=firefox
+
+  # Run WebKit tests only
+  playwright-webkit:
+    build: .
+    environment:
+      - CI=true
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    command: npx playwright test --project=webkit
