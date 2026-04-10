@@ -2,6 +2,10 @@
   "recommendations": [
     // Playwright — in-editor test runner, trace viewer, code generation
     "ms-playwright.playwright",
+    // Postman — full Postman experience inside VS Code
+    "postman.postman-for-vscode",
+    // REST Client — run .http files directly in VS Code (no account needed)
+    "humao.rest-client",
     // Docker — Dockerfile and docker-compose support
     "ms-azuretools.vscode-docker",
     // Code quality

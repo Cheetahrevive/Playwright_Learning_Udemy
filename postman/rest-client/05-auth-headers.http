@@ -1,0 +1,84 @@
+# ─────────────────────────────────────────────────────────────
+#  05 - Authentication & Headers
+#  Real-world APIs require authentication.
+#  These show the most common patterns.
+# ─────────────────────────────────────────────────────────────
+
+@baseUrl    = https://jsonplaceholder.typicode.com
+@token      = your-jwt-token-here
+@apiKey     = your-api-key-here
+@username   = admin
+@password   = password123
+
+# ── 1. Bearer Token (JWT) ─────────────────────────────────────
+# Most modern APIs use this. The server validates the token.
+
+### Bearer Token Auth
+GET {{baseUrl}}/posts/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+
+# ── 2. API Key in Header ──────────────────────────────────────
+# Secure — key is not visible in the URL or browser history.
+
+### API Key via Custom Header
+GET {{baseUrl}}/posts/1
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+
+# ── 3. API Key in Query Param ─────────────────────────────────
+# Less secure — key appears in URL and server logs.
+
+### API Key via Query Parameter
+GET {{baseUrl}}/posts/1?apikey={{apiKey}}
+Accept: application/json
+
+
+# ── 4. Basic Auth ─────────────────────────────────────────────
+# username:password encoded as Base64 in the Authorization header.
+# Format: Basic <base64(username:password)>
+# Example: admin:password123 → YWRtaW46cGFzc3dvcmQxMjM=
+
+### Basic Auth
+GET {{baseUrl}}/posts/1
+Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=
+Accept: application/json
+
+
+# ── 5. Multiple Headers ───────────────────────────────────────
+# Real requests often send several headers together.
+
+### Request with Multiple Headers
+GET {{baseUrl}}/posts
+Accept: application/json
+Content-Type: application/json
+X-Request-ID: req-001
+X-Client-Version: 1.0.0
+Cache-Control: no-cache
+
+
+# ─────────────────────────────────────────────────────────────
+#  Common HTTP Status Codes Reference:
+#
+#  2xx — Success
+#    200 OK           — request succeeded
+#    201 Created      — resource created (POST)
+#    204 No Content   — success, no body (DELETE)
+#
+#  3xx — Redirection
+#    301 Moved Permanently
+#    302 Found (temporary redirect)
+#
+#  4xx — Client Errors
+#    400 Bad Request  — invalid input
+#    401 Unauthorized — missing or invalid credentials
+#    403 Forbidden    — authenticated but not allowed
+#    404 Not Found    — resource doesn't exist
+#    422 Unprocessable Entity — validation failed
+#
+#  5xx — Server Errors
+#    500 Internal Server Error
+#    503 Service Unavailable
+# ─────────────────────────────────────────────────────────────

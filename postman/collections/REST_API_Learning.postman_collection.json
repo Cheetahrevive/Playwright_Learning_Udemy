@@ -1,0 +1,803 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "REST API Learning",
+    "description": "A step-by-step collection for learning REST APIs using JSONPlaceholder.\n\nAPI base: https://jsonplaceholder.typicode.com\n\nFolders:\n  01 - GET Requests\n  02 - POST Requests\n  03 - PUT & PATCH Requests\n  04 - DELETE Requests\n  05 - Variables & Environments\n  06 - Tests & Assertions\n  07 - Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+
+  "variable": [
+    { "key": "base_url", "value": "https://jsonplaceholder.typicode.com", "type": "string" },
+    { "key": "post_id",  "value": "1",  "type": "string" },
+    { "key": "user_id",  "value": "1",  "type": "string" }
+  ],
+
+  "item": [
+
+    {
+      "name": "01 - GET Requests",
+      "description": "GET is used to READ data. It never modifies the server.",
+      "item": [
+
+        {
+          "name": "Get All Posts",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('Response is an array', () => {",
+                "    pm.expect(pm.response.json()).to.be.an('array');",
+                "});",
+                "",
+                "pm.test('Returns 100 posts', () => {",
+                "    pm.expect(pm.response.json()).to.have.lengthOf(100);",
+                "});",
+                "",
+                "pm.test('Each post has required fields', () => {",
+                "    const posts = pm.response.json();",
+                "    posts.forEach(post => {",
+                "        pm.expect(post).to.have.all.keys('userId','id','title','body');",
+                "    });",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": ["{{base_url}}"],
+              "path": ["posts"]
+            },
+            "description": "Fetch all posts. Demonstrates a basic GET request and array response."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Get Single Post",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('Post id matches request', () => {",
+                "    const post = pm.response.json();",
+                "    pm.expect(post.id).to.eql(1);",
+                "});",
+                "",
+                "pm.test('Post has a title', () => {",
+                "    pm.expect(pm.response.json().title).to.be.a('string').and.not.empty;",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{post_id}}"]
+            },
+            "description": "Fetch a single post by ID using a path variable ({{post_id}})."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Filter Posts by User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('All posts belong to the requested user', () => {",
+                "    const userId = parseInt(pm.variables.get('user_id'));",
+                "    pm.response.json().forEach(post => {",
+                "        pm.expect(post.userId).to.eql(userId);",
+                "    });",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts?userId={{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts"],
+              "query": [{ "key": "userId", "value": "{{user_id}}" }]
+            },
+            "description": "Use query parameters to filter results. ?userId=1 returns only that user's posts."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Get Comments for a Post",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('All comments belong to the post', () => {",
+                "    const postId = parseInt(pm.variables.get('post_id'));",
+                "    pm.response.json().forEach(comment => {",
+                "        pm.expect(comment.postId).to.eql(postId);",
+                "    });",
+                "});",
+                "",
+                "pm.test('Each comment has an email', () => {",
+                "    pm.response.json().forEach(comment => {",
+                "        pm.expect(comment.email).to.include('@');",
+                "    });",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}/comments",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{post_id}}", "comments"]
+            },
+            "description": "Nested route — fetch comments that belong to a specific post."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Get All Users",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('Returns 10 users', () => {",
+                "    pm.expect(pm.response.json()).to.have.lengthOf(10);",
+                "});",
+                "",
+                "pm.test('Response time under 2000ms', () => {",
+                "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            },
+            "description": "Fetch all users. Note the response time assertion."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "02 - POST Requests",
+      "description": "POST is used to CREATE a new resource. Always send a Content-Type header.",
+      "item": [
+
+        {
+          "name": "Create a Post",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 201 Created', () => {",
+                "    pm.response.to.have.status(201);",
+                "});",
+                "",
+                "pm.test('Response contains the created post', () => {",
+                "    const body = pm.response.json();",
+                "    pm.expect(body.title).to.eql('Learn REST APIs');",
+                "    pm.expect(body.userId).to.eql(1);",
+                "    pm.expect(body.id).to.be.a('number');",
+                "});",
+                "",
+                "// Save the new post id for later use",
+                "pm.collectionVariables.set('new_post_id', pm.response.json().id);",
+                "console.log('Created post id:', pm.response.json().id);"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Learn REST APIs\",\n  \"body\": \"REST stands for Representational State Transfer.\",\n  \"userId\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": ["{{base_url}}"],
+              "path": ["posts"]
+            },
+            "description": "Create a new post. POST returns 201 Created. The new post id is saved to {{new_post_id}}."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Create a User",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 201 Created', () => {",
+                "    pm.response.to.have.status(201);",
+                "});",
+                "",
+                "pm.test('User has correct name and email', () => {",
+                "    const user = pm.response.json();",
+                "    pm.expect(user.name).to.eql('Jane Doe');",
+                "    pm.expect(user.email).to.eql('jane@example.com');",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"username\": \"janedoe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"555-1234\",\n  \"website\": \"janedoe.dev\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            },
+            "description": "Create a new user with nested address and company fields."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "03 - PUT & PATCH Requests",
+      "description": "PUT replaces the entire resource. PATCH updates only the specified fields.",
+      "item": [
+
+        {
+          "name": "Full Update — PUT",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('All fields are replaced', () => {",
+                "    const body = pm.response.json();",
+                "    pm.expect(body.title).to.eql('Updated Title');",
+                "    pm.expect(body.body).to.eql('Replaced body content.');",
+                "    pm.expect(body.userId).to.eql(1);",
+                "    pm.expect(body.id).to.eql(1);",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"title\": \"Updated Title\",\n  \"body\": \"Replaced body content.\",\n  \"userId\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{post_id}}"]
+            },
+            "description": "PUT replaces the whole resource. You must send ALL fields — missing ones are removed."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Partial Update — PATCH",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('Only title is updated', () => {",
+                "    const body = pm.response.json();",
+                "    pm.expect(body.title).to.eql('Patched Title Only');",
+                "    // body field is preserved from the original",
+                "    pm.expect(body.body).to.be.a('string').and.not.empty;",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Patched Title Only\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{post_id}}"]
+            },
+            "description": "PATCH updates only the fields you send. All other fields stay unchanged."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "04 - DELETE Requests",
+      "description": "DELETE removes a resource. A successful delete returns 200 OK with an empty body.",
+      "item": [
+
+        {
+          "name": "Delete a Post",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status code is 200', () => {",
+                "    pm.response.to.have.status(200);",
+                "});",
+                "",
+                "pm.test('Response body is empty object', () => {",
+                "    pm.expect(pm.response.json()).to.eql({});",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{post_id}}"]
+            },
+            "description": "Delete a post. The server confirms deletion with 200 and an empty JSON body {}."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "05 - Variables & Environments",
+      "description": "Variables let you reuse values and switch between environments (local, staging, production).",
+      "item": [
+
+        {
+          "name": "Read Collection Variable",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "// Read a collection variable",
+                "const baseUrl = pm.collectionVariables.get('base_url');",
+                "console.log('base_url =', baseUrl);",
+                "",
+                "pm.test('base_url is set', () => {",
+                "    pm.expect(baseUrl).to.include('jsonplaceholder');",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Demonstrates reading collection variables inside test scripts with pm.collectionVariables.get()."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Set Variable from Response",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "",
+                "// Extract a value from the response and store it",
+                "const firstPost = pm.response.json()[0];",
+                "pm.collectionVariables.set('dynamic_post_id', firstPost.id);",
+                "pm.collectionVariables.set('dynamic_user_id', firstPost.userId);",
+                "",
+                "console.log('Stored post id:', firstPost.id);",
+                "console.log('Stored user id:', firstPost.userId);"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": ["{{base_url}}"],
+              "path": ["posts"]
+            },
+            "description": "Fetch posts and save the first post's id and userId into variables. Run this before 'Use Stored Variable'."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Use Stored Variable",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "",
+                "const postId = parseInt(pm.collectionVariables.get('dynamic_post_id'));",
+                "pm.test('Fetched the dynamically stored post', () => {",
+                "    pm.expect(pm.response.json().id).to.eql(postId);",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{dynamic_post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{dynamic_post_id}}"]
+            },
+            "description": "Uses {{dynamic_post_id}} set by the previous request. This is request chaining."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "06 - Tests & Assertions",
+      "description": "Write automated checks with the pm.test() API. Runs after every response.",
+      "item": [
+
+        {
+          "name": "Status Code Assertions",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "// Exact status code",
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "",
+                "// Status code class",
+                "pm.test('Status is in 2xx range', () => {",
+                "    pm.expect(pm.response.code).to.be.within(200, 299);",
+                "});",
+                "",
+                "// Status message",
+                "pm.test('Status message is OK', () => pm.response.to.have.status('OK'));",
+                "",
+                "// Content-Type header",
+                "pm.test('Content-Type is JSON', () => {",
+                "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Shows different ways to assert the HTTP status code and headers."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Response Body Assertions",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "const post = pm.response.json();",
+                "",
+                "pm.test('id is a number', () => pm.expect(post.id).to.be.a('number'));",
+                "pm.test('title is a non-empty string', () => pm.expect(post.title).to.be.a('string').and.not.empty);",
+                "pm.test('userId is 1', () => pm.expect(post.userId).to.eql(1));",
+                "",
+                "// Nested / deep equality",
+                "pm.test('Post has all required fields', () => {",
+                "    pm.expect(post).to.have.all.keys('userId', 'id', 'title', 'body');",
+                "});",
+                "",
+                "// String contains",
+                "pm.test('Body is a non-empty string', () => {",
+                "    pm.expect(post.body).to.be.a('string').and.have.lengthOf.above(0);",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Covers common Chai assertion patterns for validating response body fields."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Response Time & Size",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Response time is under 2000ms', () => {",
+                "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                "});",
+                "",
+                "pm.test('Response size is reasonable', () => {",
+                "    pm.expect(pm.response.responseSize).to.be.below(500 * 1024); // under 500 KB",
+                "});",
+                "",
+                "console.log('Response time:', pm.response.responseTime + 'ms');",
+                "console.log('Response size:', pm.response.responseSize + ' bytes');"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": ["{{base_url}}"],
+              "path": ["posts"]
+            },
+            "description": "Assert on performance metrics — response time and payload size."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Pre-request Script Example",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Pre-request scripts run BEFORE the request is sent",
+                  "const randomId = Math.floor(Math.random() * 100) + 1;",
+                  "pm.collectionVariables.set('random_post_id', randomId);",
+                  "console.log('Random post id set to:', randomId);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expectedId = parseInt(pm.collectionVariables.get('random_post_id'));",
+                  "pm.test('Fetched the correct random post', () => {",
+                  "    pm.expect(pm.response.json().id).to.eql(expectedId);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{random_post_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "{{random_post_id}}"]
+            },
+            "description": "The pre-request script picks a random post id (1-100) before the request fires. The test verifies the correct post is returned."
+          },
+          "response": []
+        }
+
+      ]
+    },
+
+    {
+      "name": "07 - Authentication",
+      "description": "Common authentication patterns used in real-world APIs.",
+      "item": [
+
+        {
+          "name": "Bearer Token — Header",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "// JSONPlaceholder ignores auth, but this shows the correct pattern",
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "",
+                "pm.test('Authorization header was sent', () => {",
+                "    // In a real API this would be validated server-side",
+                "    console.log('Sent Authorization: Bearer {{token}}');",
+                "});"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "description": "Replace {{token}} with your actual JWT" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Bearer token pattern used by most modern APIs (JWT). Set {{token}} in your environment."
+          },
+          "response": []
+        },
+
+        {
+          "name": "API Key — Query Param",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "console.log('API key sent as query param: apikey=', pm.variables.get('api_key'));"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/1?apikey={{api_key}}",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"],
+              "query": [{ "key": "apikey", "value": "{{api_key}}", "description": "Set api_key in your environment" }]
+            },
+            "description": "API key passed as a query parameter. Common in public APIs like OpenWeatherMap, Google Maps."
+          },
+          "response": []
+        },
+
+        {
+          "name": "API Key — Custom Header",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "console.log('API key sent as header: X-API-Key');"
+              ]
+            }
+          }],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-API-Key", "value": "{{api_key}}", "description": "Custom header used by many APIs" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "API key as a custom request header. More secure than a query param (not in browser history/logs)."
+          },
+          "response": []
+        },
+
+        {
+          "name": "Basic Auth",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                "console.log('Basic auth encodes username:password as base64 in the Authorization header.');"
+              ]
+            }
+          }],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{username}}", "type": "string" },
+                { "key": "password", "value": "{{password}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Postman's built-in Basic Auth support. Set {{username}} and {{password}} in your environment."
+          },
+          "response": []
+        }
+
+      ]
+    }
+
+  ]
+}

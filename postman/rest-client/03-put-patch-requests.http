@@ -1,0 +1,67 @@
+# ─────────────────────────────────────────────────────────────
+#  03 - PUT & PATCH Requests
+#
+#  PUT   → Full replacement. You MUST send ALL fields.
+#          Missing fields are removed from the resource.
+#
+#  PATCH → Partial update. Send only the fields you want to change.
+#          All other fields stay as they are.
+# ─────────────────────────────────────────────────────────────
+
+@baseUrl = https://jsonplaceholder.typicode.com
+
+# ── PUT — Full replacement ────────────────────────────────────
+
+### Full Update Post 1 (PUT)
+PUT {{baseUrl}}/posts/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated Title",
+  "body": "This completely replaces the post body.",
+  "userId": 1
+}
+
+
+### Full Update User 1 (PUT)
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "John Updated",
+  "username": "johnupdated",
+  "email": "john.updated@example.com",
+  "phone": "555-9999",
+  "website": "updated.dev"
+}
+
+
+# ── PATCH — Partial update ────────────────────────────────────
+
+### Patch Post Title Only
+PATCH {{baseUrl}}/posts/1
+Content-Type: application/json
+
+{
+  "title": "Only the Title Changed"
+}
+
+
+### Mark Todo as Completed
+PATCH {{baseUrl}}/todos/1
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+
+### Patch User Email Only
+PATCH {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "email": "new.email@example.com"
+}

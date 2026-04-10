@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────
+#  02 - POST Requests
+#  POST creates a new resource.
+#  Always set Content-Type: application/json when sending a JSON body.
+#  A successful create returns 201 Created.
+# ─────────────────────────────────────────────────────────────
+
+@baseUrl = https://jsonplaceholder.typicode.com
+
+# ── 1. Create a post ─────────────────────────────────────────
+
+### Create Post
+POST {{baseUrl}}/posts
+Content-Type: application/json
+
+{
+  "title": "Learn REST APIs",
+  "body": "REST stands for Representational State Transfer.",
+  "userId": 1
+}
+
+
+# ── 2. Create a user ─────────────────────────────────────────
+
+### Create User
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "username": "janedoe",
+  "email": "jane@example.com",
+  "phone": "555-1234",
+  "website": "janedoe.dev",
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "zipcode": "12345"
+  }
+}
+
+
+# ── 3. Create a todo ─────────────────────────────────────────
+
+### Create Todo
+POST {{baseUrl}}/todos
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "title": "Study REST APIs",
+  "completed": false
+}

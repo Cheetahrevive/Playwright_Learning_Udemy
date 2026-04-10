@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────
+#  01 - GET Requests
+#  GET is used to READ data. It never changes anything on the server.
+#  Click "Send Request" above any request block to run it.
+# ─────────────────────────────────────────────────────────────
+
+@baseUrl = https://jsonplaceholder.typicode.com
+
+# ── 1. Get all posts ─────────────────────────────────────────
+# Returns an array of 100 posts.
+
+### Get All Posts
+GET {{baseUrl}}/posts
+Accept: application/json
+
+
+# ── 2. Get a single post ──────────────────────────────────────
+# Path variable :id selects a specific resource.
+
+### Get Post by ID
+GET {{baseUrl}}/posts/1
+Accept: application/json
+
+
+# ── 3. Filter with query parameters ──────────────────────────
+# ?userId=1 filters posts belonging to user 1.
+
+### Get Posts Filtered by User
+GET {{baseUrl}}/posts?userId=1
+Accept: application/json
+
+
+# ── 4. Nested resource ────────────────────────────────────────
+# Comments that belong to post 1.
+
+### Get Comments for Post 1
+GET {{baseUrl}}/posts/1/comments
+Accept: application/json
+
+
+# ── 5. Other resources ───────────────────────────────────────
+
+### Get All Users
+GET {{baseUrl}}/users
+Accept: application/json
+
+### Get All Todos
+GET {{baseUrl}}/todos?completed=false
+Accept: application/json
+
+### Get All Albums
+GET {{baseUrl}}/albums
+Accept: application/json
