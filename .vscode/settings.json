@@ -41,5 +41,15 @@
     "test-results": true,
     "blob-report": true,
     "package-lock.json": true
+  },
+
+  // ── HTML — disable validation on generated Playwright report files ────────
+  "html.validate.scripts": false,
+  "html.validate.styles": false,
+  "css.validate": false,
+
+  // ── Suppress all diagnostics on generated report files ───────────────────
+  "files.associations": {
+    "playwright-report/**/*.html": "plaintext"
   }
 }
