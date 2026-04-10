@@ -1,0 +1,121 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ── Test Tasks ──────────────────────────────────────────────────────────
+    {
+      "label": "Test: All Browsers",
+      "type": "shell",
+      "command": "npm test",
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: Chromium",
+      "type": "shell",
+      "command": "npm run test:chromium",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: Firefox",
+      "type": "shell",
+      "command": "npm run test:firefox",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: WebKit",
+      "type": "shell",
+      "command": "npm run test:webkit",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: Mobile Browsers",
+      "type": "shell",
+      "command": "npm run test:mobile",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: Headed (visible browser)",
+      "type": "shell",
+      "command": "npm run test:headed",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: UI Mode",
+      "type": "shell",
+      "command": "npm run test:ui",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    // ── Report Tasks ────────────────────────────────────────────────────────
+    {
+      "label": "Report: Open HTML Report",
+      "type": "shell",
+      "command": "npm run report",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    // ── Docker Tasks ────────────────────────────────────────────────────────
+    {
+      "label": "Docker: Build Image",
+      "type": "shell",
+      "command": "docker build -t playwright-learning .",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: Run All Tests",
+      "type": "shell",
+      "command": "docker compose up playwright",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: Run Chromium",
+      "type": "shell",
+      "command": "docker compose up playwright-chromium",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    // ── Utility Tasks ───────────────────────────────────────────────────────
+    {
+      "label": "Install: Dependencies",
+      "type": "shell",
+      "command": "npm ci",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install: Browsers",
+      "type": "shell",
+      "command": "npm run install:browsers",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Codegen: Record Tests",
+      "type": "shell",
+      "command": "npm run codegen",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    }
+  ]
+}

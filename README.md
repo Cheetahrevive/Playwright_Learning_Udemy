@@ -12,6 +12,8 @@ This repository contains sample tests and exercises from the Playwright automati
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running Tests](#running-tests)
+- [Docker](#docker)
+- [VS Code Setup](#vs-code-setup)
 - [Project Structure](#project-structure)
 - [Configuration](#configuration)
 - [Available Scripts](#available-scripts)
@@ -103,12 +105,71 @@ npm run codegen
 npm run report
 ```
 
+## Docker
+
+Run tests inside a container without installing browsers locally:
+
+```bash
+# Run all browsers
+docker compose up playwright
+
+# Run a specific browser
+docker compose up playwright-chromium
+docker compose up playwright-firefox
+docker compose up playwright-webkit
+```
+
+Test results and HTML reports are written to `./test-results` and `./playwright-report` on your host machine via volume mounts.
+
+## VS Code Setup
+
+This repository ships with a full `.vscode/` configuration. When you open the project VS Code will prompt you to install the recommended extensions.
+
+### Recommended Extensions
+
+| Extension | Purpose |
+| --------- | ------- |
+| Playwright Test for VS Code | In-editor test runner, trace viewer, codegen |
+| Docker | Dockerfile and docker-compose support |
+| ESLint | JavaScript linting |
+| Prettier | Code formatting |
+| Path Intellisense | Auto-complete file paths |
+| Code Spell Checker | Catch typos in tests and comments |
+
+### Running Tests from VS Code
+
+Use `Ctrl+Shift+P` (Mac: `Cmd+Shift+P`) and type **Tasks: Run Task** to access all configured tasks:
+
+- **Test: All Browsers** — default test task (`Ctrl+Shift+B` on Mac)
+- **Test: Chromium / Firefox / WebKit** — single-browser runs
+- **Test: Headed** — watch the browser as tests run
+- **Test: UI Mode** — interactive Playwright UI
+- **Docker: Build Image** — build the Docker image
+- **Docker: Run All Tests** — run tests in a container
+
+### Debugging Tests
+
+Open the **Run and Debug** panel (`Ctrl+Shift+D`) and choose a configuration:
+
+- **Debug: All Tests** — runs all tests with Playwright Inspector
+- **Debug: Current File** — debugs the file open in the editor
+- **Debug: Chromium / Firefox / WebKit** — single-browser debug
+
 ## Project Structure
 
 ```text
 Playwright_Learning_Udemy/
+├── .vscode/
+│   ├── extensions.json      # Recommended extensions
+│   ├── launch.json          # Debug configurations
+│   ├── settings.json        # Workspace settings
+│   └── tasks.json           # Run/build tasks
 ├── e2e/
 │   └── sample.spec.js       # Sample test file
+├── .dockerignore            # Docker build exclusions
+├── .gitignore               # Git exclusions
+├── docker-compose.yml       # Docker services (all browsers)
+├── Dockerfile               # Container image definition
 ├── playwright.config.js     # Playwright configuration
 ├── package.json             # Dependencies and scripts
 ├── package-lock.json        # Dependency lock file

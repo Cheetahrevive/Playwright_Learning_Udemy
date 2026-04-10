@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    // Playwright — in-editor test runner, trace viewer, code generation
+    "ms-playwright.playwright",
+    // Docker — Dockerfile and docker-compose support
+    "ms-azuretools.vscode-docker",
+    // Code quality
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
+    // Navigation helpers
+    "christian-kohler.path-intellisense",
+    // Theme / icons
+    "pkief.material-icon-theme"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  // ── Gemini Code Assist ──────────────────────────────────────────────────
+  "geminicodeassist.outlines.automaticOutlineGeneration": true,
+
+  // ── Editor ──────────────────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.rulers": [100],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  // ── JavaScript ──────────────────────────────────────────────────────────
+  "javascript.preferences.quoteStyle": "single",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // ── Playwright Extension ─────────────────────────────────────────────────
+  "playwright.reuseBrowser": false,
+  "playwright.showTrace": true,
+
+  // ── File Explorer — hide generated/build output ──────────────────────────
+  "files.exclude": {
+    "node_modules": true,
+    "playwright-report": true,
+    "test-results": true,
+    "blob-report": true,
+    "**/.DS_Store": true
+  },
+
+  // ── File Watcher — skip heavy directories ────────────────────────────────
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/test-results/**": true,
+    "**/playwright-report/**": true
+  },
+
+  // ── Search — skip generated output ───────────────────────────────────────
+  "search.exclude": {
+    "node_modules": true,
+    "playwright-report": true,
+    "test-results": true,
+    "blob-report": true,
+    "package-lock.json": true
+  }
+}
