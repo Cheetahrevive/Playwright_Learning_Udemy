@@ -6,7 +6,7 @@
 
 This repository contains sample tests and exercises from the Playwright automation course on Udemy. It demonstrates best practices for end-to-end testing using Playwright with JavaScript.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
@@ -17,42 +17,45 @@ This repository contains sample tests and exercises from the Playwright automati
 - [Available Scripts](#available-scripts)
 - [Documentation](#documentation)
 
-## ✨ Features
+## Features
 
-- ✅ **Multi-Browser Testing**: Chromium, Firefox, WebKit
-- ✅ **Mobile Testing**: Pixel 5, iPhone 12 emulation
-- ✅ **Parallel Execution**: Fast test execution
-- ✅ **CI/CD Ready**: Optimized for continuous integration
-- ✅ **Smart Artifacts**: Screenshots & videos on failure
-- ✅ **Multiple Reporters**: HTML, JSON, and console
-- ✅ **Best Practices**: Following Playwright guidelines
+- **Multi-Browser Testing**: Chromium, Firefox, WebKit
+- **Mobile Testing**: Pixel 5, iPhone 12 emulation
+- **Parallel Execution**: Fast test execution
+- **CI/CD Ready**: Optimized for continuous integration
+- **Smart Artifacts**: Screenshots & videos on failure
+- **Multiple Reporters**: HTML, JSON, and console
+- **Best Practices**: Following Playwright guidelines
 
-## 📦 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
 - **Node.js**: Version 18 or higher
 - **npm**: Version 9 or higher
 
-## 🚀 Installation
+## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Cheetahrevive/Playwright_Learning_Udemy.git
 cd Playwright_Learning_Udemy
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Install Playwright browsers:
+1. Install Playwright browsers:
+
 ```bash
 npx playwright install
 ```
 
-## 🧪 Running Tests
+## Running Tests
 
 ### Basic Test Execution
 
@@ -100,19 +103,19 @@ npm run codegen
 npm run report
 ```
 
-## 📁 Project Structure
+## Project Structure
 
-```
+```text
 Playwright_Learning_Udemy/
 ├── e2e/
 │   └── sample.spec.js       # Sample test file
 ├── playwright.config.js     # Playwright configuration
-├── package.json            # Dependencies and scripts
-├── package-lock.json       # Dependency lock file
-└── README.md              # This file
+├── package.json             # Dependencies and scripts
+├── package-lock.json        # Dependency lock file
+└── README.md                # This file
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 The project uses an optimized Playwright configuration (`playwright.config.js`) with:
 
@@ -122,12 +125,12 @@ The project uses an optimized Playwright configuration (`playwright.config.js`) 
 - **Parallel Execution**: Enabled
 - **Screenshots**: On failure only
 - **Videos**: On failure only
-- **Trace**: On first retry
+- **Trace**: On failure (retained)
 
-## 📜 Available Scripts
+## Available Scripts
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `npm test` | Run all tests |
 | `npm run test:headed` | Run tests with visible browser |
 | `npm run test:debug` | Run tests in debug mode |
@@ -139,24 +142,24 @@ The project uses an optimized Playwright configuration (`playwright.config.js`) 
 | `npm run report` | View HTML test report |
 | `npm run codegen` | Generate test code |
 
-## 📚 Documentation
+## Documentation
 
 - [Playwright Documentation](https://playwright.dev/)
 - [Playwright Best Practices](https://playwright.dev/docs/best-practices)
 - [Playwright API Reference](https://playwright.dev/docs/api/class-playwright)
 
-## 🤝 Contributing
+## Contributing
 
 This is a learning repository. Feel free to fork and experiment!
 
-## 📄 License
+## License
 
 ISC License
 
-## 👤 Author
+## Author
 
-**Cheetahrevive**
+Cheetahrevive
 
 ---
 
-⭐ If you find this repository helpful, please consider giving it a star!
+If you find this repository helpful, please consider giving it a star!
